@@ -1,0 +1,34 @@
+# Bolt Ignores
+Boltdir/modules
+Boltdir/.resource_types
+.rerun.json
+
+# Directory Ignores
+.kube
+devBoltdirs
+
+# Make sure you never submit keys by accident.
+*.pkcs7
+*.pem
+*.key
+
+# Terraform Files
+.terraform
+
+# Make sure not to accidentally push any packages.
+*.deb
+*.pkg
+*.rpm
+
+# Python Bits
+.env
+*.pyc
+__pycache__
+
+# Development Information
+devBoltdir
+
+# Build Files
+build/
+setup.spec
+dist
