@@ -9,13 +9,14 @@ plan deploy_k8s::nuke (
 # Only if confirm=true should this nuke the cluster and all nodes.
     if $confirm {
         apply(['k8s-primary','k8s-nodes'], _run_as => root) {
-            exec {'nuke it all':
-                command => '/usr/bin/kubeadm reset -f'
-            }
-
             # Stop the ETCD service
             service {'etcd':
                 ensure => stopped,
+            }
+
+            # Nuke Everything
+            exec {'nuke it all':
+                command => '/usr/bin/kubeadm reset -f'
             }
 
             # Remove the /var/lib/etcd/member directory. Get rid of all 

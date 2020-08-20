@@ -102,8 +102,8 @@ def k8sQuestion(directory):
         or
         "{}:{}".format(ktEtcdClusterHostname,ktEtcdClusterIP)
     )
-    ktETCD_IP                       = str('%{::ipaddress_eth1}')
-    ktKUBE_API_ADVERTISE_ADDRESS    = str('%{::ipaddress_eth1}')
+    ktETCD_IP                       = str('%{::ipaddress_eth0}')
+    ktKUBE_API_ADVERTISE_ADDRESS    = str('%{::ipaddress_eth0}')
     ktINSTALL_DASHBOARD             = str(input("Do you want to install the K8s Dashboard (Default: false) : ") or "false")
 
     
@@ -139,7 +139,7 @@ def buildKubePrimaryFile(directory,osName,cniProvider,etcdClusterHostname):
         'kubernetes::cgroup_driver':                'systemd',
         'kubernetes::docker_version':               '5:19.03.11~3-0~ubuntu-%{os.distro.codename}',
         'kubernetes::kubernetes_apt_location':      'https://packages.cloud.google.com/apt/',
-        'kubernetes::kubernetes_apt_release':       'kubernetes-%{os.distro.codename}',
+        'kubernetes::kubernetes_apt_release':       'kubernetes-xenial',
         'kubernetes::cni_pod_cidr':                 '10.32.0.0/12',
         'kubernetes::etcd_version':                 '3.4.0'
     })

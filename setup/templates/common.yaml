@@ -1,0 +1,4 @@
+---
+deploy_k8s::deploy:
+    vm_max_map_count: 262144
+    fs_file_max: 65536

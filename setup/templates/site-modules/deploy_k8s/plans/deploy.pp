@@ -1,30 +1,28 @@
 # Deploy Kubernetes to Primaries and Runners
-plan deploy_k8s::deploy () {
+plan deploy_k8s::deploy (
+    Integer     $vm_max_map_count    = lookup('deploy_k8s::deploy.vm_max_map_count'),
+    Integer     $fs_file_max         = lookup('deploy_k8s::deploy.fs_file_max'),
+) {
 
     # Prep the hosts; install Puppet Agent and Facter
     apply_prep(['application_servers'])
 
     # Prep the hosts; configure the sysctl 
     apply('application_servers', _run_as => root) {
-        # Ensures the conntrack count value is set to 0
-        sysctl { 'net.netfilter.nf_conntrack_count':
-            ensure  => present,
-            value   => '0',
-            comment => 'Required for Kubernetes',
-        }
-
+        # Sets the vm.max_map_count value
         sysctl {'vm.max_map_count':
-            ensure     => present,
-            value      => $vm_max_map_count,
-            comment    => 'Required for various Kubernetes services',
-            persistent => true
+            ensure  => present,
+            value   => $vm_max_map_count,
+            comment => 'Required for various Kubernetes services',
+            persist => true
         }
 
+        # Sets the fs.file-max value
         sysctl {'fs.file-max':
-            ensure     => present,
-            value      => $fs_file_max,
-            comment    => 'Required for various Kubernetes services',
-            persistent => true
+            ensure  => present,
+            value   => $fs_file_max,
+            comment => 'Required for various Kubernetes services',
+            persist => true
         }
     }
 
@@ -33,7 +31,6 @@ plan deploy_k8s::deploy () {
         # Use the Ubuntu Hiera file and provision the Kubernetes controller.
         class {'kubernetes':
             controller => true,
-            require    => Sysctl['net.netfilter.nf_conntrack_count']
         }
     }
 
@@ -42,7 +39,6 @@ plan deploy_k8s::deploy () {
         # Use the Ubuntu Hiera file and provision the Kubernetes workers.
         class {'kubernetes':
             worker  => true,
-            require => Sysctl['net.netfilter.nf_conntrack_count']
         }
     }
 }

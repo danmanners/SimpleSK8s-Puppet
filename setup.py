@@ -61,10 +61,13 @@ createK8sOutputFile(listOfThings, listOfCerts, k8sFile, inventoryFileName, inven
 
 # Create Bolt Files
 createBoltFile('bolt-project.yaml', '{}/Bolt.yaml'.format(puppetDir))
+createBoltFile('hiera.yaml', '{}/hiera.yaml'.format(puppetDir))
 createBoltFile('Puppetfile', '{}/Puppetfile'.format(puppetDir))
-createBoltFile('site-modules/deploy_k8s/data/common.yaml', '{}/site-modules/deploy_k8s/data/common.yaml'.format(puppetDir))
+createBoltFile('common.yaml', '{}/data/common.yaml'.format(puppetDir))
 createBoltFile('site-modules/deploy_k8s/plans/deploy.pp', '{}/site-modules/deploy_k8s/plans/deploy.pp'.format(puppetDir))
 createBoltFile('site-modules/deploy_k8s/plans/nuke.pp', '{}/site-modules/deploy_k8s/plans/nuke.pp'.format(puppetDir))
+
+os.remove("{}/data/env".format(args.boltdir))
 
 # Get a list of all of the hosts in active inventory:
 listOfHosts = activeInventory(args.boltdir)

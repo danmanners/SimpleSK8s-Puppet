@@ -2,6 +2,7 @@
 version: 5
 defaults:
   datadir: data
+  data_hash: yaml_data
 
 hierarchy:
   - name: "common"
@@ -9,6 +10,4 @@ hierarchy:
 
 # Kubernetes
   - name: "k8s_setup"
-    path: "k8s/Ubuntu.yaml"
-  - name: "k8s_primary"
-    path: "k8s/k8s-primary.yaml"
+    path: "Ubuntu.yaml"

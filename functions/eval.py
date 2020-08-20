@@ -15,7 +15,6 @@ def activeInventory(boltdir):
     
     return listOfHosts
 
-
 # Evaluate if the remote host responds to SSH
 def evalSocketUptime(host):
     # Opens the Socket    
@@ -27,8 +26,7 @@ def evalSocketUptime(host):
     # Close the Socket
     sockeval.close()
     # Evaluate the response code
-    if response != 0:
-        print("{} - SSH is Unresponsive".format(host))
-
-    
-
+    if response == 0:
+        print("{} - ALIVE".format(host))
+    else:
+        print("{} - DEAD".format(host))
