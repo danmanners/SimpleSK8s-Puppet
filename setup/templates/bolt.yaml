@@ -1,4 +1,8 @@
 ---
+apply_settings:
+  show_diff: true
+compile-concurrency: 5
+concurrency: 50
 plugin_hooks:
   puppet_library:
     plugin: puppet_agent

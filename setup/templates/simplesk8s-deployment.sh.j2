@@ -1,0 +1,3 @@
+#!/bin/bash
+BOLT_PROJECT={{ bolt_project_dir }} bolt puppetfile install
+BOLT_PROJECT={{ bolt_project_dir }} bolt plan run deploy_k8s::deploy

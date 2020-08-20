@@ -10,4 +10,4 @@ hierarchy:
 
 # Kubernetes
   - name: "k8s_setup"
-    path: "Ubuntu.yaml"
+    path: "kubernetes.yaml"

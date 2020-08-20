@@ -1,6 +1,7 @@
 import yaml
 import socket
 
+
 def activeInventory(boltdir):
     # Read the built inventory file
     with open("{}/inventory.yaml".format(boltdir)) as file:
@@ -8,19 +9,20 @@ def activeInventory(boltdir):
 
     # Parse the inventory as JSON
     listOfHosts = []
-    inventoryDump = loadInventory['groups'][0]['groups']
+    inventoryDump = loadInventory["groups"][0]["groups"]
     for i in inventoryDump:
-        for t in i['targets']:
+        for t in i["targets"]:
             listOfHosts.append(t)
-    
+
     return listOfHosts
+
 
 # Evaluate if the remote host responds to SSH
 def evalSocketUptime(host):
-    # Opens the Socket    
+    # Opens the Socket
     sockeval = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Specify what to check
-    location = (host,22)
+    location = (host, 22)
     # Run the Check
     response = sockeval.connect_ex(location)
     # Close the Socket
@@ -28,5 +30,7 @@ def evalSocketUptime(host):
     # Evaluate the response code
     if response == 0:
         print("{} - ALIVE".format(host))
+        return True
     else:
         print("{} - DEAD".format(host))
+        return False

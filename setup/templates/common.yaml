@@ -1,4 +1,44 @@
 ---
+# K8s Deployment Sysctl Values
 deploy_k8s::deploy:
     vm_max_map_count: 262144
     fs_file_max: 65536
+
+# Ubuntu Packages
+prep::ubuntu::packages_prep:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - gnupg2
+prep::ubuntu::docker_daemon_json: |
+    {
+        "exec-opts": ["native.cgroupdriver=systemd"],
+        "log-driver": "json-file",
+        "log-opts": {
+            "max-size": "100m"
+        },
+        "storage-driver": "overlay2"
+    }
+prep::ubuntu:
+    pgp_key_source: {{ pgp_key_source }}
+    pgp_key_id: {{ pgp_key_id }}
+
+# CentOS Packages
+prep::redhat:
+    packages_prep_1:
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+    docker_daemon.json: |
+        {
+            "exec-opts": ["native.cgroupdriver=systemd"],
+            "log-driver": "json-file",
+            "log-opts": {
+                "max-size": "100m"
+            },
+            "storage-driver": "overlay2",
+            "storage-opts": [
+                "overlay2.override_kernel_check=true"
+            ]
+        }

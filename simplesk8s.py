@@ -109,7 +109,9 @@ try:
 
         # Evaluate if any of the hosts are offline, and do not continue if so.
         if False in checkThis:
-            print("Hosts are not all online. Ensure they are all up and reachable before kicking off the provisioning script!")
+            print(
+                "Hosts are not all online. Ensure they are all up and reachable before kicking off the provisioning script!"
+            )
             sys.exit(1)
         elif False not in checkThis:
             print("All of the hosts appear up. Let's kick things off!")
@@ -119,8 +121,10 @@ try:
 
         # Create the deployment script
         createBoltFile(
-            "simplesk8s-deployment.sh.j2", "{}/simplesk8s-deployment.sh".format(os.getcwd()),
-            fileExecutable=True, bolt_project_dir="{}/{}".format(os.getcwd(), args.boltdir)
+            "simplesk8s-deployment.sh.j2",
+            "{}/simplesk8s-deployment.sh".format(os.getcwd()),
+            fileExecutable=True,
+            bolt_project_dir="{}/{}".format(os.getcwd(), args.boltdir),
         )
 
         print("Run the generated script in your terminal to deploy Kubernetes!")

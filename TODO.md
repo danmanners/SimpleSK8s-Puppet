@@ -10,3 +10,4 @@ Here's a list of things to either look into or add to the project:
 - [ ] Actually enable verbose output from the debug flag for argparse.
 - [ ] Ensure that the plans are run with BOLT_PROJECT='/mnt/c/Users/danie/code/SimpleSK8s/${args.boltdir}' at the front; else they will fail on WSL2
 - [ ] Make it more clear that the hostname for your primary K8s node is important.
+- [ ] Reformat everything for proper PEP8

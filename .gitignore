@@ -1,6 +1,6 @@
 # Directory Ignores
 .kube
-devBoltdirs
+devBoltdir
 Boltdir/
 
 # Make sure you never submit keys by accident.
@@ -23,5 +23,8 @@ __pycache__
 
 # Build Files
 build/
-setup.spec
+*.spec
 dist
+
+# Shell Script
+simplesk8s-deployment.sh
