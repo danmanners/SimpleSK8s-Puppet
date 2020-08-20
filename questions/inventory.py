@@ -63,13 +63,15 @@ def inventoryQuestions(kubePrimary):
         except:
             print("It doesn't appear that {} is a valid IP address.".format(node))
 
+    kubeNodesFinal = list(set(kubeNodes))
+
     print("===== INVENTORY -  END  =====")
 
     file_loader = FileSystemLoader("{}/setup/templates".format(os.getcwd()))
     invEnv = Environment(loader=file_loader)
     template = invEnv.get_template('inventory.yaml.j2')
     render = template.render(
-        kubeNodes = kubeNodes,
+        kubeNodes = kubeNodesFinal,
         sshUsername = sshUsername,
         sshKeySelection = sshKeySelection,
         kubePrimary = kubePrimary

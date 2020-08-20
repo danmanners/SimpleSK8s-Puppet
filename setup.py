@@ -3,13 +3,16 @@
 import os
 import sys
 import yaml
+import json
 import argparse
+from multiprocessing import Pool, TimeoutError
 from subprocess import DEVNULL, STDOUT, check_call
 
 # External Libraries
 from questions.k8s import k8sQuestion, buildKubePrimaryFile
 from questions.inventory import inventoryQuestions
-from questions.files import createK8sOutputFile, createBoltFile
+from functions.files import createK8sOutputFile, createBoltFile
+from functions.eval import evalSocketUptime, activeInventory
 
 # Sets up args
 parser = argparse.ArgumentParser(description="Sets up your homelab environment with Bolt")
@@ -59,3 +62,15 @@ createK8sOutputFile(listOfThings, listOfCerts, k8sFile, inventoryFileName, inven
 # Create Bolt Files
 createBoltFile('bolt-project.yaml', '{}/Bolt.yaml'.format(puppetDir))
 createBoltFile('Puppetfile', '{}/Puppetfile'.format(puppetDir))
+createBoltFile('site-modules/deploy_k8s/data/common.yaml', '{}/site-modules/deploy_k8s/data/common.yaml'.format(puppetDir))
+createBoltFile('site-modules/deploy_k8s/plans/deploy.pp', '{}/site-modules/deploy_k8s/plans/deploy.pp'.format(puppetDir))
+createBoltFile('site-modules/deploy_k8s/plans/nuke.pp', '{}/site-modules/deploy_k8s/plans/nuke.pp'.format(puppetDir))
+
+# Get a list of all of the hosts in active inventory:
+listOfHosts = activeInventory(args.boltdir)
+
+# Evaluate if the hosts actually have their SSH sockets open
+print("Evaluating if all hosts are alive:")
+if __name__ == '__main__':
+    with Pool(os.cpu_count()) as p:
+        p.map(evalSocketUptime, listOfHosts)

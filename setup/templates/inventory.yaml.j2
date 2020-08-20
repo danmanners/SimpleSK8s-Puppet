@@ -7,7 +7,7 @@ groups:
       - name: k8s-primary
         targets: 
           - {{ kubePrimary }}
-
+      # Kubernetes Worker Nodes
       - name: k8s-nodes
         targets:
 {%- for i in kubeNodes %}

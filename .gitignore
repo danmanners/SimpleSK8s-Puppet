@@ -1,11 +1,7 @@
-# Bolt Ignores
-Boltdir/modules
-Boltdir/.resource_types
-.rerun.json
-
 # Directory Ignores
 .kube
 devBoltdirs
+Boltdir/
 
 # Make sure you never submit keys by accident.
 *.pkcs7
@@ -24,9 +20,6 @@ devBoltdirs
 .env
 *.pyc
 __pycache__
-
-# Development Information
-devBoltdir
 
 # Build Files
 build/
