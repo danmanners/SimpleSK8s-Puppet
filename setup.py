@@ -67,7 +67,8 @@ createBoltFile('common.yaml', '{}/data/common.yaml'.format(puppetDir))
 createBoltFile('site-modules/deploy_k8s/plans/deploy.pp', '{}/site-modules/deploy_k8s/plans/deploy.pp'.format(puppetDir))
 createBoltFile('site-modules/deploy_k8s/plans/nuke.pp', '{}/site-modules/deploy_k8s/plans/nuke.pp'.format(puppetDir))
 
-os.remove("{}/data/env".format(args.boltdir))
+# Remove the env file.
+# os.remove("{}/data/env".format(args.boltdir))
 
 # Get a list of all of the hosts in active inventory:
 listOfHosts = activeInventory(args.boltdir)
